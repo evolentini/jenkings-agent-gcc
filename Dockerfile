@@ -35,7 +35,7 @@ RUN groupadd -g ${gid} ${group} \
 
 # setup SSH server
 RUN apt-get update \
-    && apt-get install --no-install-recommends -y openssh-server build-essential ruby \
+    && apt-get install --no-install-recommends -y openssh-server build-essential ruby gcovr \
     && rm -rf /var/lib/apt/lists/*
 RUN sed -i /etc/ssh/sshd_config \
         -e 's/#PermitRootLogin.*/PermitRootLogin no/' \
@@ -45,7 +45,7 @@ RUN sed -i /etc/ssh/sshd_config \
         -e 's/#LogLevel.*/LogLevel INFO/' && \
     mkdir /var/run/sshd
 
-RUN ln -s $JAVA_HOME jdk
+RUN ln -s "$JAVA_HOME" jdk
 
 RUN gem install ceedling
 
